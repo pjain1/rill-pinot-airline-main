@@ -1,0 +1,2 @@
+kind: api
+metrics_sql: select Carrier, num_arr_delays AS delays from airlineStats

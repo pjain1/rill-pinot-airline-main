@@ -1,0 +1,2 @@
+kind: api
+sql: select min("ts"), max("ts") from airlineStats

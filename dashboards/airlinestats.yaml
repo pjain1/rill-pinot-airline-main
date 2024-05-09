@@ -1,0 +1,95 @@
+model: airlineStats
+default_time_range: rill-MTD
+dimensions:
+- label: AirlineID
+  expression: cast(AirlineID as VARCHAR)
+  name: AirlineID
+- label: RandomAirport
+  expression: arrayToMv(RandomAirports)
+  name: RandomAirport
+  description: "Random Airports"
+- name: ArrTime
+  expression: cast(ArrTime as VARCHAR)
+- column: ArrTimeBlk
+- column: CancellationCode
+- column: Carrier
+- name: DepTime
+  expression: cast(DepTime as VARCHAR)
+- column: DepTimeBlk
+- column: Dest
+- name: DestAirportID
+  expression: cast(DestAirportID as VARCHAR)
+- column: DestCityName
+- column: DestStateName
+- column: Origin
+- name: OriginAirportID
+  expression: cast(OriginAirportID as VARCHAR)
+- column: OriginCityName
+- column: OriginStateName
+- column: FlightDate
+- name: FlightNum
+  expression: cast(FlightNum as VARCHAR)
+- name: DayOfWeek
+  expression: cast(DayOfWeek as VARCHAR)
+- name: DayofMonth
+  expression: cast(DayofMonth as VARCHAR)
+- name: Month
+  expression: cast(Month as VARCHAR)
+- name: Year
+  expression: cast(Year as VARCHAR)
+measures:
+- label: Total Airtime
+  expression: sum(case when AirTime >=0 then AirTime else 0 end)
+  name: total_airtime
+- label: Avg Airtime
+  expression: avg(case when AirTime >=0 then AirTime else 0 end)
+  name: avg_airtime
+- label: Total Distance
+  expression: SUM("Distance")
+  name: total_distance
+- label: Avg. Distance
+  expression: AVG("Distance")
+  name: avg_distance
+- label: Total Flights
+  expression: SUM("Flights")
+  name: total_flights
+- label: Total ActualElapsedTime
+  expression: sum(case when ActualElapsedTime >=0 then ActualElapsedTime else 0 end)
+  name: total_actual_elapsed_time
+- label: Avg ActualElapsedTime
+  expression: avg(case when ActualElapsedTime >=0 then ActualElapsedTime else 0 end)
+  name: avg_actual_elapsed_time
+- label: Avg Arrival Delay Minutes
+  expression: avg(case when ArrDelayMinutes	>=0 then ArrDelayMinutes else 0 end)
+  name: avg_arr_delay
+- label: Total Arrival Delay Minutes
+  expression: sum(case when ArrDelayMinutes	>=0 then ArrDelayMinutes else 0 end)
+  name: sum_arr_delay
+- label: Arrival Delay count
+  expression: sum(case when ArrDelayMinutes	>0 then 1 else 0 end)
+  name: num_arr_delays
+- label: On Time arrival count
+  expression: sum(case when ArrDelayMinutes	<=0 then 1 else 0 end)
+  name: on_time_arr_count
+- label: Early Arrival count
+  expression: sum(case when ArrDelayMinutes	<0 then 1 else 0 end)
+  name: early_arr_count
+- label: Avg Departure Delay Minutes
+  expression: avg(case when DepDelayMinutes	>=0 then DepDelayMinutes else 0 end)
+  name: avg_dep_delay
+- label: Total Departure Delay Minutes
+  expression: sum(case when DepDelayMinutes	>=0 then DepDelayMinutes else 0 end)
+  name: sum_dep_delay
+- label: Departure Delay count
+  expression: sum(case when DepDelayMinutes	>0 then 1 else 0 end)
+  name: num_dep_delays
+- label: On Time Departure count
+  expression: sum(case when DepDelayMinutes	<=0 then 1 else 0 end)
+  name: on_time_dep_count
+- label: Early Departure count
+  expression: sum(case when DepDelayMinutes	<0 then 1 else 0 end)
+  name: early_dep_count
+smallest_time_grain: minute
+timeseries: ts
+title: airline stats
+  
